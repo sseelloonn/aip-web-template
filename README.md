@@ -1,46 +1,41 @@
-# Getting Started with Create React App
+# AIP Web Template
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+`AIP`(Audit Information Platform) 前端模板项目。
 
-## Available Scripts
+项目是基于[Create React App](https://github.com/facebook/create-react-app)构建的。
 
-In the project directory, you can run:
+## 依赖
+
+- React 16.8.6
+- AMIS 1.6.0
+- TypeScript 4.5.4
+
+> 为了不出现各种意想不到的问题（浪费排查时间），建议按照推荐版本号配置开发环境
+
+## 构建脚本
+
+进入项目根目录，执行：
 
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+项目以 `development` 模式启动，可以通过浏览器访问：[http://localhost:3000](http://localhost:3000)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+当您的文件更新的时候，页面会自动更新。
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+将项目构建到 `build` 目录下，这是 `product` 模式，可发布的版本。
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+更多信息可以查看 [deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## FAQ
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+1. 提示错误: Error while creating new React app ("You are running `create-react-app` 4.0.3, which is behind the latest release (5.0.0)")
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+运行命令
+~~~bash
+npx clear-npx-cache
+~~~
+可以清除npx缓存然后再构建。
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
