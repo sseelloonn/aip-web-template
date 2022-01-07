@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { HashRouter as Router, Route, Link, Switch } from "react-router-dom";
 import { Layout, Button, Avatar } from "amis";
+import { Link as AmisLink } from "amis/lib/components/Link";
 import Index from "./pages/Index";
 import LeftSide from "./pages/LeftSide";
 import NavRender from "./pages/NavRender";
 import menus, { linkRouters } from "./Menus";
+import { INVALID_HEIGHT } from "./Consts";
 /**
 interface LayoutProps {
     header?: boolean | React.ReactNode;
@@ -47,13 +49,15 @@ function PortalMain(props: any) {
 
 function App() {
   const [show, setShow] = useState(true);
-  const [mainHeight, setMainHeight] = useState(window.innerHeight - 120);
+  const [mainHeight, setMainHeight] = useState(
+    window.innerHeight - INVALID_HEIGHT
+  );
   const switcher = () => {
     setShow(!show);
   };
 
   const onResize = () => {
-    let innerHeight = window.innerHeight - 120;
+    let innerHeight = window.innerHeight - INVALID_HEIGHT;
     setMainHeight(innerHeight);
   };
 
@@ -62,7 +66,7 @@ function App() {
     window.addEventListener("resize", onResize);
     return () => {
       window.removeEventListener("resize", onResize);
-    }
+    };
   }, []);
 
   return (
@@ -75,7 +79,17 @@ function App() {
               <Button onClick={switcher}>切换</Button>
             </div>
             <div style={{ float: "right", marginRight: 20, paddingTop: 2 }}>
-              <Avatar src="https://suda.cdn.bcebos.com/images/amis/ai-fake-face.jpg"></Avatar>
+              <AmisLink
+                href="https://aisuda.bce.baidu.com/amis/zh-CN/docs/index"
+                htmlTarget="_blank"
+                title="AMIS在线文档"
+                classPrefix={"amis"}
+                classnames={(...classes: any) => ""}
+              >
+                <span style={{ paddingRight: 10 }}>AMIS在线文档</span>
+              </AmisLink>
+              {/* <Avatar src="https://suda.cdn.bcebos.com/images/amis/ai-fake-face.jpg"></Avatar> */}
+              <Avatar src="http://www.tufeiping.cn/Header.svg"></Avatar>
               <span>欢迎Admin</span>
             </div>
           </div>

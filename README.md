@@ -6,6 +6,7 @@
 
 ## 依赖
 
+- NodeJS v14+
 - React 16.8.6
 - AMIS 1.6.0
 - TypeScript 4.5.4

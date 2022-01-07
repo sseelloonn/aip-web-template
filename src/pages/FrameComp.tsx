@@ -1,5 +1,5 @@
 import React from "react";
-
+import { INVALID_HEIGHT } from "../Consts";
 export interface IFrameProps {
   src: string;
   height?: number;
@@ -8,7 +8,7 @@ export interface IFrameProps {
 
 class FrameComp extends React.Component<IFrameProps, {}> {
   getHeight = () => {
-    let vh = window.innerHeight - 120;
+    let vh =  window.innerHeight - INVALID_HEIGHT;
     return vh;
   };
 
