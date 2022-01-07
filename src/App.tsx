@@ -79,6 +79,15 @@ function App() {
               <Button onClick={switcher}>切换</Button>
             </div>
             <div style={{ float: "right", marginRight: 20, paddingTop: 2 }}>
+            <AmisLink
+                href="https://github.dev/tufeiping/aip-web-template"
+                htmlTarget="_blank"
+                title="代码仓库"
+                classPrefix={"amis"}
+                classnames={(...classes: any) => ""}
+              >
+                <span style={{ paddingRight: 10 }}>代码仓库</span>
+              </AmisLink>
               <AmisLink
                 href="https://aisuda.bce.baidu.com/amis/zh-CN/docs/index"
                 htmlTarget="_blank"
