@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { HashRouter as Router, Route, Link, Switch } from "react-router-dom";
-import { Layout, Button, Avatar, AsideNav } from "amis";
+import { Layout, Button, Avatar } from "amis";
 import Index from "./pages/Index";
 import LeftSide from "./pages/LeftSide";
 import NavRender from "./pages/NavRender";
-import FrameComp from "./pages/FrameComp";
+import menus, { linkRouters } from "./Menus";
 /**
 interface LayoutProps {
     header?: boolean | React.ReactNode;
@@ -27,32 +27,6 @@ interface LayoutProps {
 }
  */
 
-const menus = [
-  {
-    label: "测试菜单",
-    children: [
-      {
-        label: "个人网站",
-        path: "/#/personblog",
-        children: [],
-      },
-      {
-        label: "用友审计",
-        path: "/#/yonyouaud",
-        children: [],
-      },
-    ],
-  },
-];
-
-function PersionBlog() {
-  return <FrameComp title="个人博客" src="https://www.tufeiping.cn" />;
-}
-
-function YonyouAud() {
-  return <FrameComp title="用友审计" src="https://www.yonyouaud.com" />;
-}
-
 function PortalMain(props: any) {
   return (
     <div style={{ ...props.style }}>
@@ -61,9 +35,10 @@ function PortalMain(props: any) {
       </div>
 
       <Switch>
+        {linkRouters.map((menu) => (
+          <Route path={menu.path} component={menu.component}></Route>
+        ))}
         <Route path="/left" component={LeftSide}></Route>
-        <Route path="/personblog" component={PersionBlog}></Route>
-        <Route path="/yonyouaud" component={YonyouAud}></Route>
         <Route path="/" component={Index}></Route>
       </Switch>
     </div>
@@ -77,31 +52,6 @@ function App() {
     setShow(!show);
   };
 
-  const goToUrl = (url: string) => {
-    window.location.href = url;
-  };
-
-  const renderNav = () => {
-    return (
-      <AsideNav
-        navigations={menus}
-        renderLink={(param: any) => {
-          let { link } = param;
-          return (
-            <li
-              style={{ cursor: "pointer" }}
-              onClick={() => goToUrl(link.path)}
-            >
-              {link.label}
-            </li>
-          );
-        }}
-        isActive={() => false}
-        renderSubLinks={() => <></>}
-      />
-    );
-  };
-
   const onResize = () => {
     let innerHeight = window.innerHeight - 120;
     setMainHeight(innerHeight);
@@ -110,6 +60,9 @@ function App() {
   useEffect(() => {
     onResize();
     window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+    }
   }, []);
 
   return (
@@ -117,7 +70,7 @@ function App() {
       <Layout
         header={
           <div>
-            <h1 style={{ paddingRight: 20, float: "left" }}>审友UI示例</h1>
+            <h2 style={{ paddingRight: 20, float: "left" }}>审友UI示例</h2>
             <div style={{ marginTop: 18, float: "left" }}>
               <Button onClick={switcher}>切换</Button>
             </div>
@@ -130,7 +83,7 @@ function App() {
         aside={
           show ? (
             <div style={{ width: 200, color: "white", height: "100%" }}>
-              {renderNav()}
+              <NavRender menus={menus} />
             </div>
           ) : (
             false

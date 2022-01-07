@@ -1,9 +1,9 @@
 import React from "react";
 
 export interface IFrameProps {
-  src?: string;
+  src: string;
   height?: number;
-  title?: string;
+  title: string;
 }
 
 class FrameComp extends React.Component<IFrameProps, {}> {

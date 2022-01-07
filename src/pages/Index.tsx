@@ -1,6 +1,6 @@
 import React from "react";
 import * as amis from "amis";
-import { Layout, Button } from "amis";
+import { Button } from "amis";
 import "amis/lib/themes/cxd.css";
 
 /**

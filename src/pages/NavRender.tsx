@@ -1,5 +1,6 @@
 import React from "react";
 import { AsideNav } from "amis";
+import { LinkItem } from "amis/lib/components/AsideNav";
 
 /**
 export interface AsideNavProps {
@@ -29,29 +30,31 @@ export interface Navigation {
 }
  */
 
-const menus = [
-  {
-    label: "百度",
-    path: "https://www.baidu.com",
-  },
-  {
-    label: "用友审计",
-    path: "https://www.yonyouaud.com",
-  },
-];
+const goToUrl = (url: string) => {
+  window.location.href = url;
+};
 
-class NavRender extends React.Component {
+export interface NavRenderProps {
+  menus: Array<LinkItem>;
+}
+class NavRender extends React.Component<NavRenderProps, {}> {
   render() {
     return (
       <AsideNav
-        navigations={menus}
+        navigations={this.props.menus}
         renderLink={(param: any) => {
-          let { link, active, toggleExpand, classnames: cx, depth } = param;
-          console.log(link);
-          return <li>{link.label}</li>;
+          let { link } = param;
+          return (
+            <li
+              style={{ cursor: "pointer" }}
+              onClick={() => goToUrl(link.path)}
+            >
+              {link.label}
+            </li>
+          );
         }}
-        isActive={()=>false}
-        renderSubLinks={()=><></>}
+        isActive={() => false}
+        renderSubLinks={() => <></>}
       />
     );
   }
