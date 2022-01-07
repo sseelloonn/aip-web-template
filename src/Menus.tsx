@@ -1,6 +1,7 @@
 import { LinkItem } from "amis/lib/components/AsideNav";
 import FrameComp from "./pages/FrameComp";
 import JsonSchema from "./pages/JsonSchema";
+import JsonDebug from "./pages/JsonDebug";
 
 export function PersionBlog() {
   return <FrameComp title="个人博客" src="https://www.tufeiping.cn" />;
@@ -14,20 +15,24 @@ export function JSONSchema() {
   return <JsonSchema />;
 }
 
+export function JsonDebugger() {
+  return <JsonDebug/>
+}
+
 const menus: Array<LinkItem> = [
   {
     label: "Ract组件测试",
     children: [
       {
-        label: "个人网站",
-        path: "/#/personblog",
-        children: [],
-      },
-      {
         label: "用友审计",
         path: "/#/yonyouaud",
         children: [],
       },
+      {
+        label: "个人网站",
+        path: "/#/personblog",
+        children: [],
+      }
     ],
   },
   {
@@ -38,8 +43,14 @@ const menus: Array<LinkItem> = [
         path: "/#/json",
         children: [],
       },
+      {
+        label: "JSON组件调试",
+        path: "/#/jsondebug",
+        children: [],
+      }
     ],
   },
+  
 ];
 
 export interface NavRouterItem {
@@ -63,6 +74,10 @@ export const linkRouters: Array<NavRouterItem> = [
     path: "/json",
     component: JSONSchema,
   },
+  {
+    path: "/jsondebug",
+    component: JsonDebugger,
+  }
 ];
 
 export default menus;
