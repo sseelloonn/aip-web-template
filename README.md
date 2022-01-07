@@ -39,3 +39,4 @@ npx clear-npx-cache
 ~~~
 可以清除npx缓存然后再构建。
 
+![Alt](https://repobeats.axiom.co/api/embed/b47e662c9d9fac647748baefd898305fbfa7e17f.svg "Repobeats analytics image")
