@@ -70,8 +70,8 @@ module.exports = {
   appTsBuildInfoFile: resolveApp('node_modules/.cache/tsconfig.tsbuildinfo'),
   swSrc: resolveModule(resolveApp, 'src/service-worker'),
   publicUrlOrPath,
-  iframeHtml: resolveApp('public/iframe.html'),
-  iframeJs: resolveModule(resolveApp, 'src/iframe'),
+  appFrameHtml: resolveApp('public/iframe.html'),
+  appFrameJs: resolveModule(resolveApp, 'src/iframe'),
 };
 
 

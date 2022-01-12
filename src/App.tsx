@@ -69,61 +69,65 @@ function App() {
     };
   }, []);
 
-  return (
-    <Router>
-      <Layout
-        header={
-          <div>
-            <h2 style={{ paddingRight: 20, float: "left" }}>审友UI示例</h2>
-            <div style={{ marginTop: 18, float: "left" }}>
-              <Button onClick={switcher}>切换</Button>
+  if (!~window.location.href.indexOf("frame.html")) {
+    return (
+      <Router>
+        <Layout
+          header={
+            <div>
+              <h2 style={{ paddingRight: 20, float: "left" }}>审友UI示例</h2>
+              <div style={{ marginTop: 18, float: "left" }}>
+                <Button onClick={switcher}>切换</Button>
+              </div>
+              <div style={{ float: "right", marginRight: 20, paddingTop: 2 }}>
+                <AmisLink
+                  href="https://github.dev/tufeiping/aip-web-template"
+                  htmlTarget="_blank"
+                  title="代码仓库"
+                  classPrefix={"amis"}
+                  classnames={(...classes: any) => ""}
+                >
+                  <span style={{ paddingRight: 10 }}>代码仓库</span>
+                </AmisLink>
+                <AmisLink
+                  href="https://aisuda.bce.baidu.com/amis/zh-CN/docs/index"
+                  htmlTarget="_blank"
+                  title="AMIS在线文档"
+                  classPrefix={"amis"}
+                  classnames={(...classes: any) => ""}
+                >
+                  <span style={{ paddingRight: 10 }}>AMIS在线文档</span>
+                </AmisLink>
+                {/* <Avatar src="https://suda.cdn.bcebos.com/images/amis/ai-fake-face.jpg"></Avatar> */}
+                <Avatar src="http://www.tufeiping.cn/Header.svg"></Avatar>
+                <span>欢迎Admin</span>
+              </div>
             </div>
-            <div style={{ float: "right", marginRight: 20, paddingTop: 2 }}>
-            <AmisLink
-                href="https://github.dev/tufeiping/aip-web-template"
-                htmlTarget="_blank"
-                title="代码仓库"
-                classPrefix={"amis"}
-                classnames={(...classes: any) => ""}
-              >
-                <span style={{ paddingRight: 10 }}>代码仓库</span>
-              </AmisLink>
-              <AmisLink
-                href="https://aisuda.bce.baidu.com/amis/zh-CN/docs/index"
-                htmlTarget="_blank"
-                title="AMIS在线文档"
-                classPrefix={"amis"}
-                classnames={(...classes: any) => ""}
-              >
-                <span style={{ paddingRight: 10 }}>AMIS在线文档</span>
-              </AmisLink>
-              {/* <Avatar src="https://suda.cdn.bcebos.com/images/amis/ai-fake-face.jpg"></Avatar> */}
-              <Avatar src="http://www.tufeiping.cn/Header.svg"></Avatar>
-              <span>欢迎Admin</span>
+          }
+          aside={
+            show ? (
+              <div style={{ width: 200, color: "white", height: "100%" }}>
+                <NavRender menus={menus} />
+              </div>
+            ) : (
+              false
+            )
+          }
+          // folded={true}
+          footer={
+            <div style={{ textAlign: "center" }}>
+              <h1>Copyright&copy;2022 用友审计</h1>
             </div>
-          </div>
-        }
-        aside={
-          show ? (
-            <div style={{ width: 200, color: "white", height: "100%" }}>
-              <NavRender menus={menus} />
-            </div>
-          ) : (
-            false
-          )
-        }
-        // folded={true}
-        footer={
-          <div style={{ textAlign: "center" }}>
-            <h1>Copyright&copy;2022 用友审计</h1>
-          </div>
-        }
-        offScreen={true}
-      >
-        <PortalMain style={{ height: mainHeight, padding: "10px 10px" }} />
-      </Layout>
-    </Router>
-  );
+          }
+          offScreen={true}
+        >
+          <PortalMain style={{ height: mainHeight, padding: "10px 10px" }} />
+        </Layout>
+      </Router>
+    );
+  } else {
+    return <>这里占个位置</>;
+  }
 }
 
 export default App;

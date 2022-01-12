@@ -187,7 +187,8 @@ module.exports = function (webpackEnv) {
   };
 
   return {
-    target: ["browserslist"],
+    // target: ["browserslist"],
+    target: "web",
     mode: isEnvProduction ? "production" : isEnvDevelopment && "development",
     // Stop compilation early in production
     bail: isEnvProduction,
@@ -198,7 +199,11 @@ module.exports = function (webpackEnv) {
       : isEnvDevelopment && "cheap-module-source-map",
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
-    entry: paths.appIndexJs,
+    // entry: paths.appIndexJs,
+    entry: {
+      index: paths.appIndexJs,
+      appFrame: paths.appFrameJs,
+    },
     output: {
       // The build folder.
       path: paths.appBuild,
@@ -207,13 +212,13 @@ module.exports = function (webpackEnv) {
       // There will be one main bundle, and one file per asynchronous chunk.
       // In development, it does not produce real files.
       filename: isEnvProduction
-        ? "static/js/[name].[contenthash:8].js"
-        : isEnvDevelopment && "static/js/bundle.js",
+        ? "static/js/[id][name].[contenthash:8].js"
+        : isEnvDevelopment && "static/js/[id]bundle.js",
       // There are also additional JS chunk files if you use code splitting.
       chunkFilename: isEnvProduction
-        ? "static/js/[name].[contenthash:8].chunk.js"
-        : isEnvDevelopment && "static/js/[name].chunk.js",
-      assetModuleFilename: "static/media/[name].[hash][ext]",
+        ? "static/js/[id][name].[contenthash:8].chunk.js"
+        : isEnvDevelopment && "static/js/[id][name].chunk.js",
+      assetModuleFilename: "static/media/[id][name].[hash][ext]",
       // webpack uses `publicPath` to determine where the app is being served from.
       // It requires a trailing slash, or the file assets will get an incorrect path.
       // We inferred the "public path" (such as / or /my-project) from homepage.
@@ -392,7 +397,7 @@ module.exports = function (webpackEnv) {
                 {
                   loader: require.resolve("file-loader"),
                   options: {
-                    name: "static/media/[name].[hash].[ext]",
+                    name: "static/media/[id][name].[hash].[ext]",
                   },
                 },
               ],
@@ -562,6 +567,7 @@ module.exports = function (webpackEnv) {
       ].filter(Boolean),
     },
     plugins: [
+      // new CleanWebpackPlugin(),
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin(
         Object.assign(
@@ -569,7 +575,7 @@ module.exports = function (webpackEnv) {
           {
             inject: true,
             template: paths.appHtml,
-            // chunks: ["index"],
+            chunks: ["index"],
           },
           isEnvProduction
             ? {
@@ -590,32 +596,33 @@ module.exports = function (webpackEnv) {
         )
       ),
 
-      // new HtmlWebpackPlugin(
-      //   Object.assign(
-      //     {},
-      //     {
-      //       inject: true,
-      //       template: paths.iframeHtml,
-      //       chunks: ["iframe"],
-      //     },
-      //     isEnvProduction
-      //       ? {
-      //           minify: {
-      //             removeComments: true,
-      //             collapseWhitespace: true,
-      //             removeRedundantAttributes: true,
-      //             useShortDoctype: true,
-      //             removeEmptyAttributes: true,
-      //             removeStyleLinkTypeAttributes: true,
-      //             keepClosingSlash: true,
-      //             minifyJS: true,
-      //             minifyCSS: true,
-      //             minifyURLs: true,
-      //           },
-      //         }
-      //       : undefined
-      //   )
-      // ),
+      new HtmlWebpackPlugin(
+        Object.assign(
+          {},
+          {
+            inject: true,
+            template: paths.appFrameHtml,
+            chunks: ["appFrame"],
+            filename: "iframe.html",
+          },
+          isEnvProduction
+            ? {
+                minify: {
+                  removeComments: true,
+                  collapseWhitespace: true,
+                  removeRedundantAttributes: true,
+                  useShortDoctype: true,
+                  removeEmptyAttributes: true,
+                  removeStyleLinkTypeAttributes: true,
+                  keepClosingSlash: true,
+                  minifyJS: true,
+                  minifyCSS: true,
+                  minifyURLs: true,
+                },
+              }
+            : undefined
+        )
+      ),
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.
       // https://github.com/facebook/create-react-app/issues/5358
@@ -652,8 +659,8 @@ module.exports = function (webpackEnv) {
         new MiniCssExtractPlugin({
           // Options similar to the same options in webpackOptions.output
           // both options are optional
-          filename: "static/css/[name].[contenthash:8].css",
-          chunkFilename: "static/css/[name].[contenthash:8].chunk.css",
+          filename: "static/css/[id][name].[contenthash:8].css",
+          chunkFilename: "static/css/[id][name].[contenthash:8].chunk.css",
         }),
       // Generate an asset manifest file with the following content:
       // - "files" key: Mapping of all asset filenames to their corresponding
@@ -669,10 +676,13 @@ module.exports = function (webpackEnv) {
             manifest[file.name] = file.path;
             return manifest;
           }, seed);
-          const entrypointFiles = entrypoints.main.filter(
-            (fileName) => !fileName.endsWith(".map")
-          );
-
+          // const entrypointFiles = entrypoints.main.filter(
+          //   (fileName) => !fileName.endsWith(".map")
+          // );
+          const entrypointFiles = {};
+          Object.keys(entrypoints).forEach(entrypoint => {
+            entrypointFiles[entrypoint] = entrypoints[entrypoint].filter(fileName => !fileName.endsWith('.map'));
+          });
           return {
             files: manifestFiles,
             entrypoints: entrypointFiles,
