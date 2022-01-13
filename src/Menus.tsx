@@ -19,6 +19,14 @@ export function JsonDebugger() {
   return <JsonDebug/>
 }
 
+export function Overview() {
+  let currentPath = window.location.protocol + "//" + window.location.host + window.location.pathname;
+  return (
+    <FrameComp title="单独页面" src={currentPath + "iframe.html#/overview"} />
+  );
+}
+
+
 const menus: Array<LinkItem> = [
   {
     label: "Ract组件测试",
@@ -50,7 +58,16 @@ const menus: Array<LinkItem> = [
       }
     ],
   },
-  
+  {
+    label: "单独页面",
+    children: [
+      {
+        label: "JSON组件测试",
+        path: "/#/overview",
+        children: [],
+      },
+    ],
+  },
 ];
 
 export interface NavRouterItem {
@@ -77,6 +94,10 @@ export const linkRouters: Array<NavRouterItem> = [
   {
     path: "/jsondebug",
     component: JsonDebugger,
+  },
+  {
+    path: "/overview",
+    component: Overview,
   }
 ];
 
