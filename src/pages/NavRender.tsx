@@ -1,5 +1,5 @@
 import React from "react";
-import { AsideNav } from "amis";
+import { AsideNav, toast } from "amis";
 import { LinkItem } from "amis/lib/components/AsideNav";
 
 /**
@@ -30,8 +30,13 @@ export interface Navigation {
 }
  */
 
-const goToUrl = (url: string) => {
-  window.location.href = url;
+const goToUrl = (url: string, title: string) => {
+  // window.location.href = url;
+  if ((window as any).openTab) {
+    (window as any).openTab(url, title);
+  } else {
+    toast.error("没有找到页签操作函数");
+  }
 };
 
 export interface NavRenderProps {
@@ -47,7 +52,7 @@ class NavRender extends React.Component<NavRenderProps, {}> {
           return (
             <li
               style={{ cursor: "pointer" }}
-              onClick={() => goToUrl(link.path)}
+              onClick={() => goToUrl(link.path, link.label)}
             >
               {link.label}
             </li>

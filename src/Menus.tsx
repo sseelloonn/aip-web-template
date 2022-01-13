@@ -63,7 +63,7 @@ const menus: Array<LinkItem> = [
     children: [
       {
         label: "JSON组件测试",
-        path: "/#/overview",
+        path: "http://localhost:3000/iframe.html#/overview",
         children: [],
       },
     ],

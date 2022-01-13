@@ -36,46 +36,104 @@ interface LayoutProps {
 }
  */
 
+const FirstPageKey = "tab-first";
+
 function PortalMain(props: any) {
-  const [currentKey, setCurrentKey] = useState("tab1");
+  const [currentKey, setCurrentKey] = useState(FirstPageKey);
+
+  const [tabItems, setTabItems] = useState([
+    {
+      src: "https://www.yonyouaud.com/",
+      title: "首页",
+      key: FirstPageKey,
+    },
+    {
+      src: "https://www.tufeiping.cn/",
+      title: "个人博客",
+      key: "tab2",
+    },
+  ]);
+
+  const closeTab = (key: string) => {
+    let newTabItems = tabItems.filter((item: any) => {
+      return item?.key !== key;
+    });
+    setTabItems(newTabItems);
+    setCurrentKey(FirstPageKey);
+    // hack code. 不得已，强制点一下
+    setTimeout(() => {
+      (document.querySelector(".cxd-Tabs-link") as HTMLElement).click();
+    }, 100);
+  };
+
+  const openTab = (url: string, title?: string) => {
+    let matchItems = tabItems.filter((item: any) => item?.src === url);
+    if (matchItems.length > 0) {
+      let firstMatch = matchItems[0];
+      setCurrentKey(firstMatch.key);
+    } else {
+      let newKey = "tab-" + Math.random();
+      tabItems.push({
+        title: title || "新标签页",
+        src: url,
+        key: newKey,
+      });
+      setTabItems(tabItems);
+      setCurrentKey(newKey);
+    }
+  };
+
+  (window as any).openTab = openTab;
+
   return (
     <div style={{ ...props.style }}>
       <Tabs
         mode="line"
         classPrefix={"cxd"}
-        // classnames={(...classes: any) => ""}
-        key={"tabs"}
         classnames={function (...classes: any): string {
-          console.log(classes);
+          let cssNames: Array<string> = [];
           let k = classes[0] as string;
-          if (k === "Tabs" || k === "Tabs-links") return "cxd-Tabs-links";
-          else if (k === "Tabs-link") return "cxd-Tabs-link";
-          return "";
-        }} // className="cxd-Tabs-links"
-        // className=""
+          if (k === "Tabs" || k === "Tabs-links") {
+            cssNames.push("cxd-Tabs-links");
+          } else if (k === "Tabs-link") {
+            cssNames.push("cxd-Tabs-link");
+          }
+          if (classes.length > 1 && classes[1] === "is-active") {
+            cssNames.push("is-active");
+          }
+          return cssNames.join(" ");
+        }}
         activeKey={currentKey}
         onSelect={(e: string | number) => {
           setCurrentKey(e as string);
         }}
+        key="nav-tabs"
       >
-        <Tab
-          title="首页"
-          // classPrefix={"cxd"}
-          // classnames={(...classes: any) => "cxd-Tabs-link"}
-          className="cxd-Tabs-link"
-          key={"tab1"}
-          eventKey={"tab1"}
-        >
-          <FrameComp title="" src="https://www.yonyouaud.com" />
-        </Tab>
-        <Tab
-          title="博客"
-          className="cxd-Tabs-link"
-          key={"tab2"}
-          eventKey={"tab2"}
-        >
-          <FrameComp title="" src="https://www.tufeiping.cn/" />
-        </Tab>
+        {tabItems.map((tabItem: any, index: number) => {
+          return (
+            <Tab
+              title={tabItem.title}
+              key={tabItem.key}
+              eventKey={tabItem.key}
+              toolbar={
+                index === 0 ? null : (
+                  <span
+                    style={{
+                      marginLeft: 10,
+                      display: "inline-block",
+                      width: 10,
+                    }}
+                    onClick={() => closeTab(tabItem.key)}
+                  >
+                    x
+                  </span>
+                )
+              }
+            >
+              <FrameComp title={tabItem.title} src={tabItem.src} />
+            </Tab>
+          );
+        })}
       </Tabs>
     </div>
   );
