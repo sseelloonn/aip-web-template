@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { HashRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { HashRouter as Router } from "react-router-dom";
 import { Layout, Button, Avatar } from "amis";
 import { Link as AmisLink } from "amis/lib/components/Link";
-import Index from "./pages/Index";
-import LeftSide from "./pages/LeftSide";
 import NavRender from "./pages/NavRender";
-import menus, { linkRouters } from "./Menus";
+import menus from "./Menus";
 import { INVALID_HEIGHT } from "./Consts";
+import FrameComp from "./pages/FrameComp";
+import { Tabs, Tab } from "amis/lib/components/Tabs";
+
+import "amis/lib/themes/default.css";
+// import "amis/lib/ helper.css";
+import "amis/sdk/helper.css";
+
+// const Tab = Tabs.Tab;
+
 /**
 interface LayoutProps {
     header?: boolean | React.ReactNode;
@@ -30,19 +37,46 @@ interface LayoutProps {
  */
 
 function PortalMain(props: any) {
+  const [currentKey, setCurrentKey] = useState("tab1");
   return (
     <div style={{ ...props.style }}>
-      <div>
-        <Link to="/left">Left</Link> <Link to="/">Home</Link>
-      </div>
-
-      <Switch>
-        {linkRouters.map((menu) => (
-          <Route path={menu.path} component={menu.component}></Route>
-        ))}
-        <Route path="/left" component={LeftSide}></Route>
-        <Route path="/" component={Index}></Route>
-      </Switch>
+      <Tabs
+        mode="line"
+        classPrefix={"cxd"}
+        // classnames={(...classes: any) => ""}
+        key={"tabs"}
+        classnames={function (...classes: any): string {
+          console.log(classes);
+          let k = classes[0] as string;
+          if (k === "Tabs" || k === "Tabs-links") return "cxd-Tabs-links";
+          else if (k === "Tabs-link") return "cxd-Tabs-link";
+          return "";
+        }} // className="cxd-Tabs-links"
+        // className=""
+        activeKey={currentKey}
+        onSelect={(e: string | number) => {
+          setCurrentKey(e as string);
+        }}
+      >
+        <Tab
+          title="首页"
+          // classPrefix={"cxd"}
+          // classnames={(...classes: any) => "cxd-Tabs-link"}
+          className="cxd-Tabs-link"
+          key={"tab1"}
+          eventKey={"tab1"}
+        >
+          <FrameComp title="" src="https://www.yonyouaud.com" />
+        </Tab>
+        <Tab
+          title="博客"
+          className="cxd-Tabs-link"
+          key={"tab2"}
+          eventKey={"tab2"}
+        >
+          <FrameComp title="" src="https://www.tufeiping.cn/" />
+        </Tab>
+      </Tabs>
     </div>
   );
 }
