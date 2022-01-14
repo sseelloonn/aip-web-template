@@ -205,11 +205,11 @@ function App() {
           )
         }
         // folded={true}
-        footer={
-          <div style={{ textAlign: "center" }}>
-            <h1>Copyright&copy;2022 用友审计</h1>
-          </div>
-        }
+        // footer={
+        //   <div style={{ textAlign: "center" }}>
+        //     <h1>Copyright&copy;2022 用友审计</h1>
+        //   </div>
+        // }
         offScreen={true}
       >
         <PortalMain style={{ height: mainHeight, padding: "10px 10px" }} />
