@@ -1,7 +1,6 @@
 import React from "react";
-import { Renderer, Spinner } from "amis";
+import { Spinner } from "amis";
 import { INVALID_HEIGHT } from "../Consts";
-import { IFrameRenderer } from "amis/lib/renderers/IFrame";
 export interface IFrameProps {
   src: string;
   height?: number;
@@ -59,36 +58,4 @@ class FrameComp extends React.Component<IFrameProps, IFrameState> {
   }
 }
 
-class FrameCompRenderer extends React.Component<
-  IFrameRenderer & IFrameProps,
-  any
-> {
-  constructor(props: IFrameRenderer & IFrameProps, context: any) {
-    super(props);
-
-    const scoped = context;
-    scoped.registerComponent(this);
-  }
-
-  componentWillUnmount() {
-    const scoped = this.context as any;
-    scoped.unRegisterComponent(this);
-  }
-
-  render() {
-    return (
-      <FrameComp
-        title={(this.props as any).title}
-        src={(this.props as any).src}
-        height={(this.props as any).height}
-      ></FrameComp>
-    );
-  }
-}
-
-// Renderer({type: "audit-iframe"})()
-
-// export default Renderer({
-//   type: "audit-iframe",
-// })(FrameCompRenderer);
 export default FrameComp;

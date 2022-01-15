@@ -203,6 +203,7 @@ module.exports = function (webpackEnv) {
     entry: {
       index: paths.appIndexJs,
       appFrame: paths.appFrameJs,
+      debuggerFrame: paths.debuggerFrameJs,
     },
     output: {
       // The build folder.
@@ -601,7 +602,7 @@ module.exports = function (webpackEnv) {
           {},
           {
             inject: true,
-            template: paths.appFrameHtml,
+            template: paths.appHtml,
             chunks: ["appFrame"],
             filename: "iframe.html",
           },
@@ -623,6 +624,34 @@ module.exports = function (webpackEnv) {
             : undefined
         )
       ),
+
+      new HtmlWebpackPlugin(
+        Object.assign(
+          {},
+          {
+            inject: true,
+            template: paths.appHtml,
+            chunks: ["debuggerFrame"],
+            filename: "debugger.html",
+          },
+          isEnvProduction
+            ? {
+                minify: {
+                  removeComments: true,
+                  collapseWhitespace: true,
+                  removeRedundantAttributes: true,
+                  useShortDoctype: true,
+                  removeEmptyAttributes: true,
+                  removeStyleLinkTypeAttributes: true,
+                  keepClosingSlash: true,
+                  minifyJS: true,
+                  minifyCSS: true,
+                  minifyURLs: true,
+                },
+              }
+            : undefined
+        )
+      ),//debuggerFrame
       // Inlines the webpack runtime script. This script is too small to warrant
       // a network request.
       // https://github.com/facebook/create-react-app/issues/5358

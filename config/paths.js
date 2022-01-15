@@ -58,6 +58,8 @@ module.exports = {
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveModule(resolveApp, 'src/index'),
+  appFrameJs: resolveModule(resolveApp, 'src/iframe'),
+  debuggerFrameJs: resolveModule(resolveApp, 'src/DebuggerIndex'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   appTsConfig: resolveApp('tsconfig.json'),
@@ -70,8 +72,6 @@ module.exports = {
   appTsBuildInfoFile: resolveApp('node_modules/.cache/tsconfig.tsbuildinfo'),
   swSrc: resolveModule(resolveApp, 'src/service-worker'),
   publicUrlOrPath,
-  appFrameHtml: resolveApp('public/iframe.html'),
-  appFrameJs: resolveModule(resolveApp, 'src/iframe'),
 };
 
 

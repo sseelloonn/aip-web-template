@@ -12,6 +12,8 @@ import "amis/lib/themes/default.css";
 // import "amis/lib/ helper.css";
 import "amis/sdk/helper.css";
 
+import "./renderers/FrameCompRenderer"; // register frame component
+
 // const Tab = Tabs.Tab;
 
 /**
