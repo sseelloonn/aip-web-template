@@ -5,7 +5,7 @@ import FrameComp, { IFrameProps } from "../pages/FrameComp";
 type IAuditFrameProps = RendererProps & IFrameProps;
 
 @Renderer({
-  type: "audit-iframe",
+  type: "au-iframe",
 })
 export class FrameCompRenderer extends React.Component<RendererProps> {
   render() {
