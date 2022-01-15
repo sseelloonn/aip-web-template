@@ -31,6 +31,11 @@ const menus: Array<LinkItem> = [
         path: "./iframe.html#/overview",
         children: [],
       },
+      {
+        label: "JSON在线测试",
+        path: "./debugger.html",
+        children: [],
+      },
     ],
   },
 ];
