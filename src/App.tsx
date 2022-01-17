@@ -13,6 +13,7 @@ import "amis/lib/themes/default.css";
 import "amis/sdk/helper.css";
 
 import "./renderers/FrameCompRenderer"; // register frame component
+import "./renderers/HandTableRenderer"; // register hand table component
 
 // const Tab = Tabs.Tab;
 

@@ -19,43 +19,115 @@ export interface CodeMirrorEditorProps {
 } 
  */
 
+// 该schema定义了一个审友UI扩展组件-来自tinper的表格组件
 const defaultJsonCode: string = `
 {
-    "type": "page",
-    "body": {
-      "type": "form",
-      "body": [
-        {
-          "type": "input-text",
-          "name": "test",
-          "label": "Text"
-        },
-        {
-          "type": "button-toolbar",
-          "label": "按钮组",
-          "buttons": [
-            {
-              "type": "button",
-              "label": "按钮",
-              "actionType": "dialog",
-              "dialog": {
-                "title": "提示",
-                "body": "对，你刚点击了！"
+  "type": "page",
+  "body": {
+    "type": "form",
+    "body": [
+      {
+        "type": "au-handtable",
+        "name": "test",
+        "label": "Text",
+        "colHeaders": ["姓名", "等级", "性别", "时间"],
+        "cdata": [
+          {
+            "id": 1,
+            "name": "张小贝",
+            "level": 19,
+            "gender": "1",
+            "time": "09:20:30"
+          },
+          {
+            "id": 2,
+            "name": "张小贝",
+            "level": 10,
+            "gender": "1",
+            "time": "09:20:30"
+          },
+          {
+            "id": 3,
+            "name": "张小贝",
+            "level": 20,
+            "gender": "0",
+            "time": "09:20:30"
+          },
+          {
+            "id": 4,
+            "name": "张小贝",
+            "level": 20,
+            "gender": "0",
+            "time": "09:20:30"
+          }
+        ],
+        "rowKey": "id",
+        "colWidths": [150, 100, 100, 220, null],
+        "columnHeaderHeight": 30,
+        "width": 520,
+        "height": 400,
+        "columns": [
+          {
+            "data": "name",
+            "textTooltip": true
+          },
+          {
+            "data": "level",
+            "type": "numeric"
+          },
+          {
+            "data": "gender",
+            "type": "select",
+            "source": [
+              {
+                "value": "请选择",
+                "key": ""
+              },
+              {
+                "value": "男",
+                "key": "1"
+              },
+              {
+                "value": "女",
+                "key": "0"
               }
-            },
-            {
-              "type": "submit",
-              "label": "提交"
-            },
-            {
-              "type": "reset",
-              "label": "重置"
+            ],
+            "dropdownMenu": true
+          },
+          {
+            "data": "time",
+            "type": "time",
+            "timeFormat": "hh:mm:ss",
+            "correctFormat": true
+          }
+        ]
+      },
+      {
+        "type": "button-toolbar",
+        "label": "按钮组",
+        "buttons": [
+          {
+            "type": "button",
+            "label": "按钮",
+            "actionType": "dialog",
+            "dialog": {
+              "title": "提示",
+              "body": "对，你刚点击了！"
             }
-          ]
-        }
-      ]
-    }
+          },
+          {
+            "type": "submit",
+            "label": "提交"
+          },
+          {
+            "type": "reset",
+            "label": "重置"
+          }
+        ]
+      }
+    ]
   }
+}
 `;
 
 class JsonDebug extends React.Component<any, any> {
